@@ -1,8 +1,14 @@
 require('./config/config');
 
 const _ = require('lodash');
+
 const express = require('express');
+var app = express();
+
 const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
 const {ObjectID} = require('mongodb');
 
 
@@ -18,13 +24,15 @@ var {Patient} = require('./models/patient');
 var {Prescription} = require('./models/prescription');
 var {Symptom} =  require('./models/symptom');
 
-var app = express();
+
 const port = process.env.PORT;
 
-app.use(bodyParser.json());
+var hospitalRoutes =  require('./routes/hospitalroutes');
+hospitalRoutes(app);
 
-
-
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'})
+});
 
 app.listen(port, () => {
     console.log(`Started up at port ${port}`);

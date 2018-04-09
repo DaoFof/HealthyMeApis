@@ -24,12 +24,12 @@ contact:{
     require: true,
 },
 email:{
-    type: Number,
+    type: String,
     require: true,
 },
 createdOn:{
     type: Date,
-    require: true,
+    default: Date.now
 },
 createdBy:{
     type: String,
