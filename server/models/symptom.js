@@ -3,15 +3,15 @@ var mongoose = require('mongoose');
 var Symptom = mongoose.model('Symptom', {
 name:{
     type: String,
-    require: true,
+    required: true,
 },
 description:{
     type: String,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

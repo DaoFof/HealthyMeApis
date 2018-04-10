@@ -3,27 +3,27 @@ var mongoose = require('mongoose');
 var Departement = mongoose.model('Departement', {
 name:{
     type: String,
-    require: true,
+    required: true,
 },
 contact:{
     type: Number,
-    require: false,
+    required: false,
 },
 email:{
     type: Number,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 createdBy:{
     type: String,
-    require: false,
+    required: false,
 },
 expertiseRate:{
     type: Number,
-    require: false,
+    required: false,
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

@@ -3,19 +3,19 @@ var mongoose = require('mongoose');
 var Prescription = mongoose.model('Prescription', {
 description:{
     type: String,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 doctor:{
     type: String,
-    require: false,
+    required: false,
 },
 patient:{
     type: String,
-    require: false,
+    required: false,
 },
 /*symptoms:{
 
@@ -24,7 +24,7 @@ drugs:{
 },*/
 sickness:{
     type: String,
-    require: false
+    required: false
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

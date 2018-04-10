@@ -3,30 +3,30 @@ var mongoose = require('mongoose');
 var Diagnose = mongoose.model('Diagnose', {
 result:{
     type: String,
-    require: true,
+    required: true,
 },
 description:{
     type: String,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 doctor:{
     type: String,
-    require: false,
+    required: false,
 },
 patient:{
     type: String,
-    require: false,
+    required: false,
 },
 /*symptoms:{
 
 }*/
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    requiredd: true
 }*/
 });
 

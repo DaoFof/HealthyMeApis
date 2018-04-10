@@ -3,15 +3,16 @@ var mongoose = require('mongoose');
 var Hospital = mongoose.model('Hospital', {
 name:{
     type: String,
-    require: true,
+    required: true,
+    /*unique: true*/
 },
 city:{
     type: String,
-    require: true,
+    required: true,
 },
 country:{
     type: String,
-    require: true,
+    required: true,
 },
 locationLat:{
     type: Number
@@ -21,11 +22,12 @@ locationLong:{
 },
 contact:{
     type: Number,
-    require: true,
+    required: true,
 },
 email:{
     type: String,
-    require: true,
+    required: true,
+    unique: true
 },
 createdOn:{
     type: Date,

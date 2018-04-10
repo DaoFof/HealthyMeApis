@@ -3,35 +3,35 @@ var mongoose = require('mongoose');
 var Patient = mongoose.model('Patient', {
 name:{
     type: String,
-    require: true,
+    required: true,
 },
 city:{
     type: String,
-    require: true,
+    required: true,
 },
 country:{
     type: String,
-    require: true,
+    required: true,
 },
 contact:{
     type: Number,
-    require: true,
+    required: true,
 },
 email:{
     type: Number,
-    require: true,
+    required: true,
 },
 Job:{
     type: String,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 expertiseRate:{
     type: Number,
-    /*require: true,*/
+    /*required: true,*/
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

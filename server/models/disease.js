@@ -3,23 +3,23 @@ var mongoose = require('mongoose');
 var Disease = mongoose.model('Disease', {
 name:{
     type: String,
-    require: true,
+    required: true,
 },
 type:{
     type: String,
-    require: false,
+    required: false,
 },
 description:{
     type: String,
-    require: false,
+    required: false,
 },
 createdOn:{
     type: Date,
-    require: true,
+    required: true,
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    requiredd: true
 }*/
 });
 
