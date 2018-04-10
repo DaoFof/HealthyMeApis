@@ -18,10 +18,10 @@ contact:{
     required: true,
 },
 email:{
-    type: Number,
+    type: String,
     required: true,
 },
-medicalField:{
+medicalField/*Departement*/:{
     type: String,
     required: true,
 },
@@ -31,11 +31,12 @@ studiedIn:{
 },
 createdOn:{
     type: Date,
-    required: true,
+    default: Date.now
 },
 expertiseRate:{
     type: Number,
     /*required: true,*/
+    default: "0"
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

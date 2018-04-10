@@ -1,76 +1,76 @@
-var {Hospital} = require('../models/hospital');
+var {Doctor} = require('../models/doctor');
 const {ObjectID} = require ('mongodb');
 const _ = require('lodash');
 
 module.exports = function(app) {
 
-	app.post('/hospital',/*authenticate,*/ async (req, res) => {
+	app.post('/doctor',/*authenticate,*/ async (req, res) => {
         try{
-          var hospital = new Hospital({
+          var doctor = new Doctor({
             name: req.body.name,
             city: req.body.city,
             country: req.body.country,
-            locationLat: req.body.locationLat,
-            locationLong: req.body.locationLong,
             contact: req.body.contact,
-            email: req.body.email
+            email: req.body.email,
+            medicalField: req.body.medicalField,
+            studiedIn:  req.body.studiedIn
           });
       
-          const doc = await hospital.save();
+          const doc = await doctor.save();
           res.send(doc);
         }catch(e){
-            console.log(e);
+          console.log(e);
           res.status(400).send(e);
         }
       });
       
-      app.get('/hospital', /*authenticate,*/ async (req, res) => {
+      app.get('/doctor', /*authenticate,*/ async (req, res) => {
         try {
-          const hospitals = await Hospital.find({});
-          res.send({hospitals});
+          const doctors = await Doctor.find({});
+          res.send({doctors});
         } catch (e) {
           res.status(400).send(e);
         }
       });
 
-      app.get('/hospital/:id', /*authenticate,*/ async (req, res) => {
+      app.get('/doctor/:id', /*authenticate,*/ async (req, res) => {
         try {
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
             return res.status(404).send();
           }
-          const hospital = await Hospital.findOne({
+          const doctor = await Doctor.findOne({
             _id : id 
           });
-          if(!hospital){
-            return res.status(404).send({hospital: 'Nothing found'});
+          if(!doctor){
+            return res.status(404).send({doctor: 'Nothing found'});
           }
-          res.send({hospital});
+          res.send({doctor});
         } catch (e) {
           res.status(400).send(e);
         }
       });
 
-      app.delete('/hospital/:id',/*authenticate,*/  async (req, res)=>{
+      app.delete('/doctor/:id',/*authenticate,*/  async (req, res)=>{
         try{
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
             return res.status(404).send({url: id + '/Not found'});
           }
-          const hospital = await Hospital.findOneAndRemove({
+          const doctor = await Doctor.findOneAndRemove({
             _id:id,
             /*_creator: req.user._id*/
           });
-          if(!hospital){
+          if(!doctor){
             return res.status(404).send();
           }
-          res.send({hospital});
+          res.send({doctor});
         }catch(e){
           res.status(400).send(e);
         }
       });
       
-      app.patch('/hospital/:id',/*authenticate,*/ async  (req, res)=>{
+      app.patch('/doctor/:id',/*authenticate,*/ async  (req, res)=>{
         try{
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
@@ -78,11 +78,11 @@ module.exports = function(app) {
           }
           var body = req.body;
           
-        const hospital = await Hospital.findOneAndUpdate({_id : id/*, _creator: req.user._id*/},{$set : body}, {new : true});
-          if(!hospital){
+        const doctor = await Doctor.findOneAndUpdate({_id : id/*, _creator: req.user._id*/},{$set : body}, {new : true});
+          if(!doctor){
             return res.status(404).send();
           }
-          res.send({hospital});
+          res.send({doctor});
         }catch(e){
           res.status(400).send(e);
         }      
