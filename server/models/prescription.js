@@ -7,7 +7,7 @@ description:{
 },
 createdOn:{
     type: Date,
-    required: true,
+    default: Date.now,
 },
 doctor:{
     type: mongoose.Schema.Types.ObjectId,
@@ -15,14 +15,38 @@ doctor:{
 },
 patient:{
     type: mongoose.Schema.Types.ObjectId,
-    required: false,
+    required: true,
 },
 /*symptoms:{
 
-},
-drugs:{
-}, // Children
-sickness:{
+},*/
+drugs:[{
+    name:{
+        type: String,
+        required: true,
+    },
+    brand:{
+        type: String,
+        required: false,
+    },
+    typeOfDrug:{
+        type: String,
+        required: false,
+    },
+    createdOn:{
+        type: Date,
+        default: Date.now
+    },
+    description:{
+        type: String,
+        required: false
+    },
+    dosage:{
+        type: String,
+        required: true
+    }
+}], // Children
+/*sickness:{
     type: String,
     required: false
 },*/
@@ -30,10 +54,6 @@ diagnoseId:{
     type: mongoose.Schema.Types.ObjectId,
     required: true
 }
-/*_creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-}*/
 });
 
 module.exports = {Prescription};

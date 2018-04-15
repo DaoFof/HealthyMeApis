@@ -30,18 +30,17 @@ const port = process.env.PORT;
 var hospitalRoutes =  require('./routes/hospitalroutes');
 hospitalRoutes(app);
 
-var doctorRoutes =  require('./routes/doctorroutes');
-doctorRoutes(app);
+const doctorRoutes =  require('./routes/doctorroutes'), 
+    departementRoutes =  require('./routes/hdepartementroutes');
+    patientRoutes =  require('./routes/patientroutes'),
+    diagnoseRoutes =  require('./routes/diagnoseroutes'),
+    prescriptionRoutes =  require('./routes/prescriptionroutes');
 
-var departementRoutes =  require('./routes/hdepartementroutes');
-departementRoutes(app);
-
-
-var patientRoutes =  require('./routes/patientroutes');
-patientRoutes(app);
-
-var diagnoseRoutes =  require('./routes/diagnoseroutes');
-diagnoseRoutes(app);
+  doctorRoutes(app);
+  departementRoutes(app);
+  patientRoutes(app);
+  diagnoseRoutes(app);
+  prescriptionRoutes(app);
 
 
 app.use(function(req, res) {
