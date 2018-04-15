@@ -17,6 +17,19 @@ createdOn:{
     type: Date,
     required: true,
 },
+prescriptionId:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+},
+description:{
+    type: String,
+    required: false
+},
+dosage:{
+    type: String,
+    required: true
+}
+
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true

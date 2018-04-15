@@ -21,7 +21,7 @@ locationLong:{
     type: Number
 },
 contact:{
-    type: Number,
+    type: String,
     required: true,
 },
 email:{
@@ -40,6 +40,7 @@ createdBy:{
 expertiseRate:{
     type: Number,
     /*require: true,*/
+    default: 0
 },
 departments:[{
     department:{
@@ -51,10 +52,30 @@ departments:[{
             type: String,
             requred: true
         },
+        createdOn:{
+            type: Date,
+            required: true,
+        },
+        createdBy:{
+            type: String,
+            required: false,
+        },
+        contact:{
+            type: String,
+            required: true
+        },
+        email:{
+            type: String,
+            required: true
+        },
         time_created:{
             type: Date,
             default: Date.now
-        }
+        },
+        expertiseRate:{
+            type: Number,
+            default: 0
+        },
     }
 }],
 /*_creator: {

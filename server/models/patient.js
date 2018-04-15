@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Patient = mongoose.model('Patient', {
+var PatientSchema = new mongoose.Schema({
 name:{
     type: String,
     required: true,
@@ -14,7 +14,7 @@ country:{
     required: true,
 },
 contact:{
-    type: Number,
+    type: String,
     required: true,
 },
 email:{
@@ -33,10 +33,39 @@ expertiseRate:{
     type: Number,
     /*required: true,*/
 },
+vistedDoctors:[{
+    doctor:{
+        doctorId:{
+            type: String,
+            required: true
+        },
+        name:{
+            type: String,
+            required: false
+        }
+    }
+}],
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
 }*/
 });
+
+PatientSchema.methods.addDoctor = async function (params) {
+    var patient = this;
+    var update = {
+        $push:{
+            vistedDoctors:{
+                doctor:{
+                    doctorId: params.id,
+                    name: params.name || ""
+                }
+            }
+        }
+    }
+    return await patient.update(update);
+}
+
+var Patient = mongoose.model('Patient', PatientSchema);
 
 module.exports = {Patient};

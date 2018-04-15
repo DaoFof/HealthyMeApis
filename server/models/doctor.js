@@ -14,7 +14,7 @@ country:{
     required: true,
 },
 contact:{
-    type: Number,
+    type: String,
     required: true,
 },
 email:{
@@ -24,6 +24,10 @@ email:{
 medicalField/*Departement*/:{
     type: String,
     required: true,
+},
+departement:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
 },
 studiedIn:{
     type: String,
@@ -36,7 +40,7 @@ createdOn:{
 expertiseRate:{
     type: Number,
     /*required: true,*/
-    default: "0"
+    default: 0
 },
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

@@ -10,22 +10,26 @@ createdOn:{
     required: true,
 },
 doctor:{
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
 },
 patient:{
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: false,
 },
 /*symptoms:{
 
 },
 drugs:{
-},*/
+}, // Children
 sickness:{
     type: String,
     required: false
-},
+},*/
+diagnoseId:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+}
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true

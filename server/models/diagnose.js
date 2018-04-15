@@ -11,16 +11,32 @@ description:{
 },
 createdOn:{
     type: Date,
-    required: true,
+    default: Date.now
 },
 doctor:{
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
 },
 patient:{
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
 },
+symptoms:[{
+    symptom:{
+        name:{
+            type: String,
+            required: true
+        },
+        description:{
+            type: String,
+            required: false
+        },
+        date:{
+            type: Date,
+            default: Date.now
+        }
+    }
+}],
 /*symptoms:{
 
 }*/

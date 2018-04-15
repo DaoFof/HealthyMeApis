@@ -4,27 +4,24 @@ var Departement = mongoose.model('Departement', {
 name:{
     type: String,
     required: true,
+    unique: true
 },
 contact:{
-    type: Number,
-    required: false,
-},
-email:{
-    type: Number,
-    required: false,
-},
-createdOn:{
-    type: Date,
-    required: true,
-},
-createdBy:{
     type: String,
     required: false,
 },
-expertiseRate:{
-    type: Number,
-    required: false,
+medicalField:{
+    type: String,
+    required: true
 },
+description:{
+    type:String,
+    required: true
+},
+created_on:{
+    type: Date,
+    default: Date.now
+}
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true

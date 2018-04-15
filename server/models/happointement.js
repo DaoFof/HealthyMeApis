@@ -9,13 +9,17 @@ createdOn:{
     type: Date,
     required: true,
 },
+departement:{
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+},
 doctor:{
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
 },
 patient:{
-    type: String,
-    required: false,
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
 },
 /*symptoms:{
 
