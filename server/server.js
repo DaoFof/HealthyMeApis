@@ -36,6 +36,14 @@ doctorRoutes(app);
 var departementRoutes =  require('./routes/hdepartementroutes');
 departementRoutes(app);
 
+
+var patientRoutes =  require('./routes/patientroutes');
+patientRoutes(app);
+
+var diagnoseRoutes =  require('./routes/diagnoseroutes');
+diagnoseRoutes(app);
+
+
 app.use(function(req, res) {
   res.status(404).send({url: req.originalUrl + ' not found'})
 });

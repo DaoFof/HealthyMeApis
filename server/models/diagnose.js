@@ -22,19 +22,17 @@ patient:{
     required: true,
 },
 symptoms:[{
-    symptom:{
-        name:{
-            type: String,
-            required: true
-        },
-        description:{
-            type: String,
-            required: false
-        },
-        date:{
-            type: Date,
-            default: Date.now
-        }
+    name:{
+        type: String,
+        required: true
+    },
+    description:{
+        type: String,
+        required: false
+    },
+    date:{
+        type: Date,
+        default: Date.now
     }
 }],
 /*symptoms:{

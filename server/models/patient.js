@@ -4,6 +4,7 @@ var PatientSchema = new mongoose.Schema({
 name:{
     type: String,
     required: true,
+    unique: true
 },
 city:{
     type: String,
@@ -18,20 +19,17 @@ contact:{
     required: true,
 },
 email:{
-    type: Number,
+    type: String,
     required: true,
 },
-Job:{
+job:{
     type: String,
     required: false,
 },
 createdOn:{
     type: Date,
     required: true,
-},
-expertiseRate:{
-    type: Number,
-    /*required: true,*/
+    default: Date.now
 },
 vistedDoctors:[{
     doctor:{
@@ -45,6 +43,10 @@ vistedDoctors:[{
         }
     }
 }],
+uniqueID:{
+    type: String,
+    required: false // on deployment should be true
+}
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
