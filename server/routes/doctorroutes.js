@@ -1,6 +1,8 @@
 var {Doctor} = require('../models/doctor');
 const {ObjectID} = require ('mongodb');
 const _ = require('lodash');
+var mongoose = require('mongoose');
+
 
 module.exports = function(app) {
 
@@ -12,6 +14,7 @@ module.exports = function(app) {
             country: req.body.country,
             contact: req.body.contact,
             email: req.body.email,
+            department: req.body.department,
             medicalField: req.body.medicalField,
             studiedIn:  req.body.studiedIn
           });

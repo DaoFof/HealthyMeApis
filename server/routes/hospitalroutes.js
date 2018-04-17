@@ -13,7 +13,8 @@ module.exports = function(app) {
             locationLat: req.body.locationLat,
             locationLong: req.body.locationLong,
             contact: req.body.contact,
-            email: req.body.email
+            email: req.body.email,
+            departments: req.body.departments
           });
       
           const doc = await hospital.save();

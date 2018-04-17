@@ -32,15 +32,13 @@ createdOn:{
     default: Date.now
 },
 vistedDoctors:[{
-    doctor:{
-        doctorId:{
-            type: String,
-            required: true
-        },
-        name:{
-            type: String,
-            required: false
-        }
+    doctorId:{
+        type: String,
+        required: true
+    },
+    name:{
+        type: String,
+        required: false
     }
 }],
 uniqueID:{

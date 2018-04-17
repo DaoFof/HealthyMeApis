@@ -10,10 +10,6 @@ contact:{
     type: String,
     required: false,
 },
-medicalField:{
-    type: String,
-    required: true
-},
 description:{
     type:String,
     required: true

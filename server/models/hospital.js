@@ -43,40 +43,34 @@ expertiseRate:{
     default: 0
 },
 departments:[{
-    department:{
-        departmentId:{
-            type: String,
-            required: true
-        },
-        name:{
-            type: String,
-            requred: true
-        },
-        createdOn:{
-            type: Date,
-            required: true,
-        },
-        createdBy:{
-            type: String,
-            required: false,
-        },
-        contact:{
-            type: String,
-            required: true
-        },
-        email:{
-            type: String,
-            required: true
-        },
-        time_created:{
-            type: Date,
-            default: Date.now
-        },
-        expertiseRate:{
-            type: Number,
-            default: 0
-        },
-    }
+    departmentId:{
+        type: String,
+        required: true
+    },
+    createdOn:{
+        type: Date,
+        required: false,
+    },
+    createdBy:{
+        type: String,
+        required: false,
+    },
+    contact:{
+        type: String,
+        required: true
+    },
+    email:{
+        type: String,
+        required: true
+    },
+    time_created:{
+        type: Date,
+        default: Date.now
+    },
+    expertiseRate:{
+        type: Number,
+        default: 0
+    }   
 }],
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,

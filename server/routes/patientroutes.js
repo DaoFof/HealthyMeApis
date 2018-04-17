@@ -1,4 +1,5 @@
 var {Patient} = require('../models/patient');
+const doctorRoutes = require('./doctorroutes');
 const {ObjectID} = require ('mongodb');
 const _ = require('lodash');
 
@@ -13,7 +14,8 @@ module.exports = function(app) {
             contact: req.body.contact,
             email: req.body.email,
             job: req.body.job,
-            uniqueID: req.body.id || ""
+            uniqueID: req.body.id || "",
+            vistedDoctors: req.body.vistedDoctors
           });
       
           const doc = await patient.save();
@@ -45,6 +47,28 @@ module.exports = function(app) {
           if(!patient){
             return res.status(404).send({patient: 'Nothing found'});
           }
+          res.send({patient});
+        } catch (e) {
+          res.status(400).send(e);
+        }
+      });
+
+
+      app.get('/patientHospital/:id', /*authenticate,*/ async (req, res) => {
+        try {
+          var id = req.params.id;
+          if(!ObjectID.isValid(id)){
+            return res.status(404).send();
+          }
+          var patient = await Patient.findOne({
+            _id : id 
+          });
+          if(!patient){
+            return res.status(404).send({patient: 'Nothing found'});
+          }
+          doctors = patient.vistedDoctors;
+          doctorRoutes(app);
+          
           res.send({patient});
         } catch (e) {
           res.status(400).send(e);

@@ -9,8 +9,7 @@ module.exports = function(app) {
           var departement = new Departement({
             name: req.body.name,
             contact: req.body.contact,
-            medicalField: req.body.medicalField,
-            description:  req.body.studiedIn
+            description:  req.body.description
           });
       
           const doc = await departement.save();

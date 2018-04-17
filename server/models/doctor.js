@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Doctor = mongoose.model('Doctor', {
+var DoctorSchema = mongoose.Schema({
 name:{
     type: String,
     required: true,
@@ -25,7 +25,7 @@ medicalField/*Departement*/:{
     type: String,
     required: true,
 },
-departement:{
+department:{
     type: mongoose.Schema.Types.ObjectId,
     required: true
 },
@@ -47,5 +47,7 @@ expertiseRate:{
     required: true
 }*/
 });
+
+var Doctor = mongoose.model('Doctor', DoctorSchema);
 
 module.exports = {Doctor};
