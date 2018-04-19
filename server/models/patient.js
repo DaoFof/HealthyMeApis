@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var {Doctor} = require('./doctor');
+var {Hospital} = require('./hospital');
 
 var PatientSchema = new mongoose.Schema({
 name:{
@@ -65,7 +67,29 @@ PatientSchema.methods.addDoctor = async function (params) {
     }
     return await patient.update(update);
 }
-
+PatientSchema.methods.retrieveHospital = async function (params){
+     // params = patient.vistedDoctors
+    async function retrieveDoctor(id){
+        const doctor = await Doctor.findOne({
+          _id : id 
+        });
+        return doctor;
+      };
+      async function retrieveHospital(departmentId){
+        const hospital = await Hospital.findOne({
+          'departments._id' : departmentId 
+        });
+        return hospital;
+      };
+    var doctors = [], hospitals = [];
+    for (let doctor of params) {
+        doctors.push(await retrieveDoctor(doctor.doctorId));
+    }
+    for (let doctor of doctors){
+        hospitals.push(await retrieveHospital(doctor.department));
+    }
+    return hospitals;
+};
 var Patient = mongoose.model('Patient', PatientSchema);
 
 module.exports = {Patient};

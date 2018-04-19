@@ -1,5 +1,4 @@
 var {Patient} = require('../models/patient');
-const doctorRoutes = require('./doctorroutes');
 const {ObjectID} = require ('mongodb');
 const _ = require('lodash');
 
@@ -56,6 +55,14 @@ module.exports = function(app) {
 
       app.get('/patientHospital/:id', /*authenticate,*/ async (req, res) => {
         try {
+          function removeDuplicates( arr, prop ) {
+            let obj = {};
+            return Object.keys(arr.reduce((prev, next) => {
+              if(!obj[next[prop]]) obj[next[prop]] = next; 
+              return obj;
+            }, obj)).map((i) => obj[i]);
+          }
+          
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
             return res.status(404).send();
@@ -66,10 +73,9 @@ module.exports = function(app) {
           if(!patient){
             return res.status(404).send({patient: 'Nothing found'});
           }
-          doctors = patient.vistedDoctors;
-          doctorRoutes(app);
-          
-          res.send({patient});
+
+          hospitals = removeDuplicates(await patient.retrieveHospital(patient.vistedDoctors),"_id");
+          res.send({hospitals});
         } catch (e) {
           res.status(400).send(e);
         }

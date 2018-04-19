@@ -47,6 +47,10 @@ departments:[{
         type: String,
         required: true
     },
+    departmentName:{
+        type: String,
+        required: false // MAKE IT TRUE LATER
+    },
     createdOn:{
         type: Date,
         required: false,
@@ -70,7 +74,7 @@ departments:[{
     expertiseRate:{
         type: Number,
         default: 0
-    }   
+    }
 }],
 /*_creator: {
     type: mongoose.Schema.Types.ObjectId,
