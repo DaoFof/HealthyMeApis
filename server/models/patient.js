@@ -33,7 +33,7 @@ createdOn:{
     required: true,
     default: Date.now
 },
-vistedDoctors:[{
+visitedDoctors:[{
     doctorId:{
         type: String,
         required: true
@@ -67,14 +67,14 @@ PatientSchema.methods.addDoctor = async function (params) {
     }
     return await patient.update(update);
 }
+  // params = patient.vistedDoctors
+  async function retrieveDoctor(id){
+    const doctor = await Doctor.findOne({
+      _id : id 
+    });    
+    return doctor;
+  };
 PatientSchema.methods.retrieveHospital = async function (params){
-     // params = patient.vistedDoctors
-    async function retrieveDoctor(id){
-        const doctor = await Doctor.findOne({
-          _id : id 
-        });
-        return doctor;
-      };
       async function retrieveHospital(departmentId){
         const hospital = await Hospital.findOne({
           'departments._id' : departmentId 
@@ -89,6 +89,14 @@ PatientSchema.methods.retrieveHospital = async function (params){
         hospitals.push(await retrieveHospital(doctor.department));
     }
     return hospitals;
+};
+
+PatientSchema.methods.retrieveDoctor = async function (params){
+   var doctors = [];
+   for (let doctor of params) {
+       doctors.push(await retrieveDoctor(doctor.doctorId));
+   }
+   return doctors;
 };
 var Patient = mongoose.model('Patient', PatientSchema);
 

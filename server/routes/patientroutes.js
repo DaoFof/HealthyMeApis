@@ -14,7 +14,7 @@ module.exports = function(app) {
             email: req.body.email,
             job: req.body.job,
             uniqueID: req.body.id || "",
-            vistedDoctors: req.body.vistedDoctors
+            visitedDoctors: req.body.visitedDoctors
           });
       
           const doc = await patient.save();
@@ -74,9 +74,43 @@ module.exports = function(app) {
             return res.status(404).send({patient: 'Nothing found'});
           }
 
-          hospitals = removeDuplicates(await patient.retrieveHospital(patient.vistedDoctors),"_id");
+          hospitals = removeDuplicates(await patient.retrieveHospital(patient.visitedDoctors),"_id");
           res.send({hospitals});
         } catch (e) {
+          console.log(e);
+          
+          res.status(400).send(e);
+        }
+      });
+
+
+      app.get('/patientDoctor/:id', /*authenticate,*/ async (req, res) => {
+        try {
+          function removeDuplicates( arr, prop ) {
+            let obj = {};
+            return Object.keys(arr.reduce((prev, next) => {
+              if(!obj[next[prop]]) obj[next[prop]] = next; 
+              return obj;
+            }, obj)).map((i) => obj[i]);
+          }
+          
+          var id = req.params.id;
+          if(!ObjectID.isValid(id)){
+            return res.status(404).send();
+          }
+          var patient = await Patient.findOne({
+            _id : id 
+          });
+          if(!patient){
+            return res.status(404).send({patient: 'Nothing found'});
+          }
+          console.log(patient.visitedDoctors);
+          
+          doctors = removeDuplicates(await patient.retrieveDoctor(patient.visitedDoctors),"_id");
+          res.send({doctors});
+        } catch (e) {
+          console.log(e);
+          
           res.status(400).send(e);
         }
       });
