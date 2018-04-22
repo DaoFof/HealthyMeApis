@@ -3,10 +3,13 @@ var {Doctor} = require('./doctor');
 var {Hospital} = require('./hospital');
 
 var PatientSchema = new mongoose.Schema({
-name:{
+lastName:{
+    type: String,
+    required: true
+},
+firstName:{
     type: String,
     required: true,
-    unique: true
 },
 city:{
     type: String,

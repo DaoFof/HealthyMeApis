@@ -7,7 +7,8 @@ module.exports = function(app) {
 	app.post('/patient',/*authenticate,*/ async (req, res) => {
         try{
           var patient = new Patient({
-            name: req.body.name,
+            lastName: req.body.lastName,
+            firstName: req.body.firstName,
             city: req.body.city,
             country: req.body.country,
             contact: req.body.contact,

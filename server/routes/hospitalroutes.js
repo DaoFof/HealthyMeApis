@@ -2,6 +2,8 @@ var {Hospital} = require('../models/hospital');
 const {ObjectID} = require ('mongodb');
 const _ = require('lodash');
 
+var {authenticate} = require('../middleware/authenticate');
+
 module.exports = function(app) {
 
 	app.post('/hospital',/*authenticate,*/ async (req, res) => {
@@ -25,8 +27,10 @@ module.exports = function(app) {
         }
       });
       
-      app.get('/hospital', /*authenticate,*/ async (req, res) => {
+      app.get('/hospital', authenticate, async (req, res) => {
         try {
+          var header = req.header('x-auth');
+          console.log({header});
           const hospitals = await Hospital.find({});
           res.send({hospitals});
         } catch (e) {

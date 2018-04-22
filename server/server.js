@@ -9,8 +9,14 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-const {ObjectID} = require('mongodb');
+var cors = require('cors');
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+};
+app.use(cors(corsOptions));
 
+const {ObjectID} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
 var {Diagnose} = require('./models/diagnose');
@@ -23,15 +29,15 @@ var {Hospital} = require('./models/hospital');
 var {Patient} = require('./models/patient');
 var {Prescription} = require('./models/prescription');
 var {Symptom} =  require('./models/symptom');
-
+var {User} = require('./models/user');
 
 const port = process.env.PORT;
 //ENABLE CORS
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
+});*/
 
 var hospitalRoutes =  require('./routes/hospitalroutes');
 hospitalRoutes(app);
@@ -40,13 +46,16 @@ const doctorRoutes =  require('./routes/doctorroutes'),
     departementRoutes =  require('./routes/hdepartementroutes');
     patientRoutes =  require('./routes/patientroutes'),
     diagnoseRoutes =  require('./routes/diagnoseroutes'),
-    prescriptionRoutes =  require('./routes/prescriptionroutes');
+    prescriptionRoutes =  require('./routes/prescriptionroutes'),
+    userRoute =  require('./routes/userroute');
 
+  userRoute(app);
   doctorRoutes(app);
   departementRoutes(app);
   patientRoutes(app);
   diagnoseRoutes(app);
   prescriptionRoutes(app);
+
 
 
 app.use(function(req, res) {
