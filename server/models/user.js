@@ -4,7 +4,39 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
+
+var {PatientSchema} = require('./patient');
+var {DoctorSchema} = require('./doctor');
+var {HospitalManager} = require('./hospitalManager');
+
 var UserSchema = new mongoose.Schema({
+  lastName:{
+    type: String,
+    required: true
+  },
+  firstName:{
+      type: String,
+      required: true,
+  },
+  city:{
+      type: String,
+      required: false,
+  },
+  country:{
+      type: String,
+      required: false,
+  },
+  contact:{
+      type: String,
+      required: function(){
+        return this.email == "" || this.email == undefined || this.email == null
+      },
+  },
+  createdOn:{
+      type: Date,
+      required: true,
+      default: Date.now
+  },
   email: {
     type: String,
     required: true,
@@ -33,11 +65,15 @@ var UserSchema = new mongoose.Schema({
   }],
   userType:{
       type: String,
+      enum: ['Patient', 'Doctor', 'Hospital Manager'],
       required: true,
   },
-  userId:{
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+  patient: PatientSchema,
+  doctor: DoctorSchema,
+  manager: HospitalManager,
+  uniqueID:{
+      type: String,
+      required: false // on deployment should be true
   }
 });
 
@@ -45,7 +81,7 @@ UserSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
 
-  return _.pick(userObject, ['_id', 'email']);
+  return _.pick(userObject, ['_id', 'email', 'lastName', 'firstName', 'userType']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
@@ -110,7 +146,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
 
 UserSchema.pre('save', function (next) {
   var user = this;
-
+  this.wasNew =  this.isNew;
   if (user.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {

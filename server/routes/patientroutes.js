@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 module.exports = function(app) {
 
-	app.post('/patient',/*authenticate,*/ async (req, res) => {
+	/*app.post('/patient',authenticate, async (req, res) => {
         try{
           var patient = new Patient({
             lastName: req.body.lastName,
@@ -24,9 +24,9 @@ module.exports = function(app) {
           console.log(e);
           res.status(400).send(e);
         }
-      });
+      });*/
       
-      app.get('/patient', /*authenticate,*/ async (req, res) => {
+      app.get('/patient', /*authenticate, */async (req, res) => {
         try {
           const patients = await Patient.find({});
           res.send({patients});

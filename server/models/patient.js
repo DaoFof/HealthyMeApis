@@ -3,38 +3,9 @@ var {Doctor} = require('./doctor');
 var {Hospital} = require('./hospital');
 
 var PatientSchema = new mongoose.Schema({
-lastName:{
-    type: String,
-    required: true
-},
-firstName:{
-    type: String,
-    required: true,
-},
-city:{
-    type: String,
-    required: true,
-},
-country:{
-    type: String,
-    required: true,
-},
-contact:{
-    type: String,
-    required: true,
-},
-email:{
-    type: String,
-    required: true,
-},
 job:{
     type: String,
     required: false,
-},
-createdOn:{
-    type: Date,
-    required: true,
-    default: Date.now
 },
 visitedDoctors:[{
     doctorId:{
@@ -45,15 +16,7 @@ visitedDoctors:[{
         type: String,
         required: false
     }
-}],
-uniqueID:{
-    type: String,
-    required: false // on deployment should be true
-}
-/*_creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true
-}*/
+}]
 });
 
 PatientSchema.methods.addDoctor = async function (params) {
@@ -103,4 +66,4 @@ PatientSchema.methods.retrieveDoctor = async function (params){
 };
 var Patient = mongoose.model('Patient', PatientSchema);
 
-module.exports = {Patient};
+module.exports = {Patient, PatientSchema};

@@ -27,7 +27,6 @@ contact:{
 email:{
     type: String,
     required: true,
-    unique: true
 },
 createdOn:{
     type: Date,
@@ -100,4 +99,4 @@ HospitalSchema.methods.addDepartment = async function (depart){
 
 var Hospital =  mongoose.model('Hospital', HospitalSchema);
 
-module.exports = {Hospital};
+module.exports = {Hospital, HospitalSchema};
