@@ -10,9 +10,10 @@ module.exports = function(app){
 app.post('/users', async (req, res) => {
     try{
       const body = _.pick(req.body, 
-        ['email', 'password', 'lastName', 'firstName', 'city', 'country','contact', 'userType']
+        ['email', 'password', 'city', 'country','contact', 'userType']
       );
-      console.log(body);
+      body.firstName = req.body.name.firstName,
+      body.lastName = req.body.name.lastName;
       
       const user = new User(body);
       await user.save();
@@ -26,7 +27,7 @@ app.post('/users', async (req, res) => {
   });
   
   // GET ALL
-  app.get('/users', authenticate, async (req, res)=>{
+  app.get('/users', /*authenticate,*/ async (req, res)=>{
     try {
       const users = await User.find({});
       res.send({users});
@@ -43,10 +44,10 @@ app.post('/users', async (req, res) => {
     }
   }
   //GET BY TYPE 
-  app.get('/patient', authenticate, (req, res)=>{
+  app.get('/patient',/*authenticate,*/ (req, res)=>{
     getElement("Patient", res);
   });
-  app.get('/doctor', authenticate, async (req, res)=>{
+  app.get('/doctor',/*authenticate,*/async (req, res)=>{
    getElement("Doctor", res);
   });
   app.get('/manager', authenticate, async (req, res)=>{
@@ -82,7 +83,7 @@ app.post('/users', async (req, res) => {
     try{
       const body = _.pick(req.body, ['email', 'password']);
       const user = await User.findByCredentials(body.email, body.password);
-      const token = await user.generateAuthToken();
+      const token = await user.generateAuthToken();      
       res.header('x-auth', token).send(user);
     }catch(e){
       res.status(400).send();

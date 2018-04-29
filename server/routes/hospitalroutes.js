@@ -27,7 +27,7 @@ module.exports = function(app) {
         }
       });
       
-      app.get('/hospital', authenticate, async (req, res) => {
+      app.get('/hospital', /*authenticate,*/ async (req, res) => {
         try {
           var header = req.header('x-auth');
           console.log({header});

@@ -80,7 +80,7 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
-
+ 
   return _.pick(userObject, ['_id', 'email', 'lastName', 'firstName', 'userType']);
 };
 
