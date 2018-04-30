@@ -74,6 +74,10 @@ var UserSchema = new mongoose.Schema({
   uniqueID:{
       type: String,
       required: false // on deployment should be true
+  },
+  wasNew:{
+    type: Boolean,
+    required: false
   }
 });
 
