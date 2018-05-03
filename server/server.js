@@ -4,7 +4,7 @@ const _ = require('lodash');
 
 const express = require('express');
 var app = express();
-
+var multer = require('multer');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -15,6 +15,23 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
 };
 app.use(cors(corsOptions));
+
+
+//multer storage setup
+var storage = multer.diskStorage({ //multers disk storage settings
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/uploads/')
+  },
+  filename: function (req, file, cb) {
+    var datetimestamp = Date.now();
+    console.log(req.user._id);
+    
+    cb(null, req.user._id + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+  }
+});
+var upload = multer({ //multer settings
+  storage: storage
+}).single('file');
 
 const {ObjectID} = require('mongodb');
 
@@ -50,7 +67,7 @@ const doctorRoutes =  require('./routes/doctorroutes'),
     prescriptionRoutes =  require('./routes/prescriptionroutes'),
     userRoute =  require('./routes/userroute');
 
-  userRoute(app);
+  userRoute(app, upload);
   doctorRoutes(app);
   departementRoutes(app);
   patientRoutes(app);

@@ -5,7 +5,7 @@ var {User} = require('../models/user');
 
 var {authenticate} = require('../middleware/authenticate');
 
-module.exports = function(app){
+module.exports = function(app, upload){
     // POST /users
 app.post('/users', async (req, res) => {
     try{
@@ -113,5 +113,17 @@ app.post('/users', async (req, res) => {
       console.log(e);
       res.status(400).send(e);
     }      
+  });
+
+  app.post('/uploadFile', authenticate, async (req, res)=>{
+    upload(req, res, function (err) {
+      if (err) {
+        // An error occurred when uploading
+        res.status(502).send({err})
+      }
+      res.status(200).send({'user': req.user})
+
+      // Everything went fine
+    })
   });
 }

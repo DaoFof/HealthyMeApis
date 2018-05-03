@@ -22,7 +22,7 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  long:{
+  lng:{
     type: String,
     required: false
   },
