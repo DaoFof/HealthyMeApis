@@ -1,6 +1,10 @@
 var mongoose = require('mongoose');
 
 var HospitalSchema = new mongoose.Schema({
+managerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+},
 name:{
     type: String,
     required: true,
@@ -13,20 +17,23 @@ city:{
 country:{
     type: String,
     required: true,
+},lat: {
+    type: String,
+    required: false
 },
-locationLat:{
-    type: Number
-},
-locationLong:{
-    type: Number
-},
+lng: {
+    type: String,
+    required: false
+}, 
 contact:{
     type: String,
-    required: true,
+    required:function() {
+        return this.email == "" || this.email == undefined || this.email == null
+    }
 },
 email:{
     type: String,
-    required: true,
+    required: false,
 },
 createdOn:{
     type: Date,
@@ -49,26 +56,6 @@ departments:[{
     departmentName:{
         type: String,
         required: false // MAKE IT TRUE LATER
-    },
-    createdOn:{
-        type: Date,
-        required: false,
-    },
-    createdBy:{
-        type: String,
-        required: false,
-    },
-    contact:{
-        type: String,
-        required: true
-    },
-    email:{
-        type: String,
-        required: true
-    },
-    time_created:{
-        type: Date,
-        default: Date.now
     },
     expertiseRate:{
         type: Number,

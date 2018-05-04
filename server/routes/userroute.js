@@ -114,7 +114,7 @@ app.post('/users', async (req, res) => {
       res.status(400).send(e);
     }      
   });
-
+// user picture upload route
   app.post('/uploadFile', authenticate, async (req, res)=>{
     upload(req, res, function (err) {
       if (err) {

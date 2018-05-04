@@ -53,6 +53,7 @@ const port = process.env.PORT;
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, PATCH");
   res.header("Access-Control-Expose-Headers", "x-auth");
   next();
 });
@@ -68,11 +69,11 @@ const doctorRoutes =  require('./routes/doctorroutes'),
     userRoute =  require('./routes/userroute');
 
   userRoute(app, upload);
-  doctorRoutes(app);
   departementRoutes(app);
+  /*doctorRoutes(app);
   patientRoutes(app);
   diagnoseRoutes(app);
-  prescriptionRoutes(app);
+  prescriptionRoutes(app);*/
 
 
 

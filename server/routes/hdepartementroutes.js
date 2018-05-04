@@ -23,6 +23,11 @@ module.exports = function(app) {
       app.get('/departement', /*authenticate,*/ async (req, res) => {
         try {
           const departements = await Departement.find({});
+          departements.forEach(departement => {
+            departement = _.pick(departement,[
+              '_id', 'name'
+            ])
+          });
           res.send({departements});
         } catch (e) {
           res.status(400).send(e);
