@@ -22,13 +22,19 @@ module.exports = function(app) {
       
       app.get('/departement', /*authenticate,*/ async (req, res) => {
         try {
+          var departmentsToSend = [];
           const departements = await Departement.find({});
-          departements.forEach(departement => {
+          for (var departement of departements) {
             departement = _.pick(departement,[
               '_id', 'name'
-            ])
-          });
-          res.send({departements});
+            ]);
+            departement.departmentId = departement._id;
+            departement.departmentName = departement.name;
+            delete departement._id;
+            delete departement.name; 
+            departmentsToSend.push(departement);
+          }
+          res.send({departmentsToSend});
         } catch (e) {
           res.status(400).send(e);
         }

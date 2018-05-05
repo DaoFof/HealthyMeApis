@@ -16,7 +16,7 @@ module.exports = function(app) {
           lng: req.body.lng,
           contact: req.body.contact,
           email: req.body.email,
-          departments: req.body.department,
+          departments: req.body.departmentControl,
           managerId: req.user._id
         });
 
