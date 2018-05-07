@@ -41,7 +41,7 @@ module.exports = function(app) {
         }
       });
 
-      app.get('/hospital/:id', /*authenticate,*/ async (req, res) => {
+      app.get('/hospital/:id', authenticate, async (req, res) => {
         try {
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
@@ -98,15 +98,15 @@ module.exports = function(app) {
         }
       });
       
-      app.patch('/hospital/:id',/*authenticate,*/ async  (req, res)=>{
+      app.patch('/hospital/:id',authenticate, async  (req, res)=>{
         try{
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
             return res.status(404).send();
           }
           var body = req.body;
-          
-        const hospital = await Hospital.findOneAndUpdate({_id : id/*, _creator: req.user._id*/},{$set : body}, {new : true});
+          body.departments = req.body.departmentControl;
+        const hospital = await Hospital.findOneAndUpdate({_id : id, managerId: req.user._id},{$set : body}, {new : true});
           if(!hospital){
             return res.status(404).send();
           }
