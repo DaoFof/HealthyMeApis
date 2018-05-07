@@ -65,7 +65,7 @@ module.exports = function(app) {
           if (!ObjectID.isValid(id)) {
             return res.status(404).send();
           }
-          const hospital = await Hospital.findOne({
+          const hospital = await Hospital.find({
             managerId: id
           });
           if (!hospital) {
@@ -77,7 +77,7 @@ module.exports = function(app) {
         }
       });
 
-      app.delete('/hospital/:id',/*authenticate,*/  async (req, res)=>{
+      app.delete('/hospital/:id',authenticate, async (req, res)=>{
         try{
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
@@ -85,13 +85,15 @@ module.exports = function(app) {
           }
           const hospital = await Hospital.findOneAndRemove({
             _id:id,
-            /*_creator: req.user._id*/
+            managerId: req.user._id
           });
           if(!hospital){
             return res.status(404).send();
           }
-          res.send({hospital});
+          res.status(200).send({hospital});
         }catch(e){
+          console.log(e);
+          
           res.status(400).send(e);
         }
       });
