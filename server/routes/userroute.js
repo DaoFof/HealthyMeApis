@@ -124,6 +124,10 @@ app.post('/users', async (req, res) => {
       if (!updateInfo) {
         return res.status(404).send();
       }
+      for (const hospital of req.body) {
+        let manager = await User.findById(hospital.managerId);
+        let result = await manager.addDoctorRequest(req.user);
+      }
       res.status(200).send({ updateInfo });
     } catch (e) {
       console.log(e);

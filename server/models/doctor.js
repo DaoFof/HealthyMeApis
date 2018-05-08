@@ -18,6 +18,10 @@ hospitals:[{
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    managerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
     name: {
         type: String,
         required: false // MAKE IT TRUE LATER

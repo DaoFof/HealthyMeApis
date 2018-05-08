@@ -198,7 +198,21 @@ UserSchema.methods.addHospitals = async function (hospitals){
   }
   return await user.update(update);
 }
-
+UserSchema.methods.addDoctorRequest = async function (doctor){
+  var user = this;
+  var toPush = {
+    "doctorId": doctor._id,
+    "firstName": doctor.firstName,
+    "lastName": doctor.lastName,
+    "email": doctor.email
+  }
+  var update = {
+    $push:{
+      "manager.doctorRequest": toPush
+    }
+  }
+  return await user.update(update);
+}
 var User = mongoose.model('User', UserSchema);
 
 module.exports = {User}
