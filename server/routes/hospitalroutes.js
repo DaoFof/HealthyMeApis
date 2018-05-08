@@ -19,13 +19,9 @@ module.exports = function(app) {
           departments: req.body.departmentControl,
           managerId: req.user._id
         });
-
-        console.log(req.body);
-        
         const doc = await hospital.save();
         res.send(doc);
       }catch(e){
-          console.log(e);
         res.status(400).send(e);
       }
     });
@@ -105,7 +101,9 @@ module.exports = function(app) {
             return res.status(404).send();
           }
           var body = req.body;
-          body.departments = req.body.departmentControl;
+          if(req.body.departmentControl){
+            body.departments = req.body.departmentControl;
+          }
         const hospital = await Hospital.findOneAndUpdate({_id : id, managerId: req.user._id},{$set : body}, {new : true});
           if(!hospital){
             return res.status(404).send();

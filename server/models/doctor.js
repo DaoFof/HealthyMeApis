@@ -13,6 +13,16 @@ studiedIn:{
     type: String,
     /*required: true,*/
 },
+hospitals:[{
+    hospitalId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    name: {
+        type: String,
+        required: false // MAKE IT TRUE LATER
+    },
+}],
 expertiseRate:{
     type: Number,
     /*required: true,*/

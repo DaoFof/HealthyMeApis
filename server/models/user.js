@@ -86,6 +86,16 @@ var UserSchema = new mongoose.Schema({
   wasNew:{
     type: Boolean,
     required: false
+  },
+  allow:{
+    required: true,
+    type: Boolean,
+    default: function(){
+      if(this.userType == 'Doctor'){
+        return false;
+      }
+      return true;
+    }
   }
 });
 
@@ -171,6 +181,23 @@ UserSchema.pre('save', function (next) {
   }
 });
 
+UserSchema.methods.addHospitals = async function (hospitals){
+  var user = this;
+  var toPush = [];
+  for (const hospital of hospitals) {
+    hospital.hospitalId = hospital._id;
+    delete hospital._id;
+    toPush.push(hospital);
+  }
+  var update = {
+    $push:{
+      "doctor.hospitals":{
+        $each: toPush
+      }
+    }
+  }
+  return await user.update(update);
+}
 
 var User = mongoose.model('User', UserSchema);
 

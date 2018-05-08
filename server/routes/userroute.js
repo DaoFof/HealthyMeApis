@@ -103,7 +103,7 @@ app.post('/users', async (req, res) => {
   app.patch('/user',authenticate, async  (req, res)=>{
     try{
       var body = req.body;
-      var id =  req.user._id
+      var id =  req.user._id;
       const user = await User.findOneAndUpdate({_id : id},{$set : body}, {new : true});
       if(!user){
         return res.status(404).send();
@@ -114,6 +114,23 @@ app.post('/users', async (req, res) => {
       res.status(400).send(e);
     }      
   });
+
+  app.patch('/addDoctorHospital', authenticate, async (req, res) => {
+    try {
+      if(req.user.userType != 'Doctor'){
+        return res.status(401).send({'userType': 'Different to doctor'});
+      }
+      var updateInfo = await req.user.addHospitals(req.body);
+      if (!updateInfo) {
+        return res.status(404).send();
+      }
+      res.status(200).send({ updateInfo });
+    } catch (e) {
+      console.log(e);
+      res.status(400).send(e);
+    }
+  });
+
 // user picture upload route
   app.post('/uploadFile', authenticate, async (req, res)=>{
     upload(req, res, function (err) {
