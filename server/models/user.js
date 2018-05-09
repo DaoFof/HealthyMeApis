@@ -226,15 +226,17 @@ function findRequest(id, user) {
 }
 UserSchema.methods.acceptDoctorRequest = async function(id){
   var user = this;
+  var request = findRequest(id, user);
   var update = {
     $push:{
-      "manager.acceptedDoctor": findRequest(id, user)
+      "manager.acceptedDoctor": request
     },
     $pull:{
-      "manager.doctorRequest": findRequest(id, user)
+      "manager.doctorRequest": request
     }
   }
-  return await user.update(update);
+  var res = await user.update(update);
+  return { res, "doctorId": request.doctorId}
 }
 UserSchema.methods.denyDoctorRequest = async function (id) {
   var user = this;

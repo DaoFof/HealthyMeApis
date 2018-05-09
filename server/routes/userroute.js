@@ -144,7 +144,8 @@ app.post('/users', async (req, res) => {
       }
       const user = await User.findOne(query);
       let result = await user.acceptDoctorRequest(req.body.id);
-      res.status(200).send({result});
+      const doctor = await User.findByIdAndUpdate(result.doctorId, { $set: {'allow': true} }, { new: true });
+      res.status(200).send({doctor});
     }catch(e){
       console.log(e);
       res.status(400).send(e);
