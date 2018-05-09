@@ -10,16 +10,41 @@ var HospitalManager = new mongoose.Schema({
     doctorRequest:[{
         doctorId:{
             type: mongoose.Schema.Types.ObjectId,
-            required: true
+            required: false
         },lastName: {
             type: String,
-            required: true
+            required: false
         },
         firstName: {
             type: String,
-            required: true,
+            required: false,
         },
         email:{
+            type: String,
+            required: false
+        },
+        hospitalName:{
+            type: String,
+            required: false
+        }
+    }],
+    acceptedDoctor:[{
+        doctorId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: false
+        }, lastName: {
+            type: String,
+            required: false
+        },
+        firstName: {
+            type: String,
+            required: false,
+        },
+        email: {
+            type: String,
+            required: false
+        },
+        hospitalName: {
             type: String,
             required: false
         }

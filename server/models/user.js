@@ -102,8 +102,11 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
- 
-  return _.pick(userObject, ['_id', 'email', 'lastName', 'firstName', 'userType']);
+  var toSend = ['_id', 'email', 'lastName', 'firstName', 'userType'];
+  if(user.userType == 'Hospital Manager'){
+    toSend.push('manager.doctorRequest');
+  }
+  return _.pick(userObject,toSend);
 };
 
 UserSchema.methods.generateAuthToken = function () {
@@ -198,13 +201,14 @@ UserSchema.methods.addHospitals = async function (hospitals){
   }
   return await user.update(update);
 }
-UserSchema.methods.addDoctorRequest = async function (doctor){
+UserSchema.methods.addDoctorRequest = async function (doctor, hospitalName){
   var user = this;
   var toPush = {
     "doctorId": doctor._id,
     "firstName": doctor.firstName,
     "lastName": doctor.lastName,
-    "email": doctor.email
+    "email": doctor.email,
+    "hospitalName": hospitalName
   }
   var update = {
     $push:{
@@ -213,6 +217,35 @@ UserSchema.methods.addDoctorRequest = async function (doctor){
   }
   return await user.update(update);
 }
+function findRequest(id, user) {
+  for (const request of user.manager.doctorRequest) {
+    if (request._id == id) {
+      return request
+    }
+  }
+}
+UserSchema.methods.acceptDoctorRequest = async function(id){
+  var user = this;
+  var update = {
+    $push:{
+      "manager.acceptedDoctor": findRequest(id, user)
+    },
+    $pull:{
+      "manager.doctorRequest": findRequest(id, user)
+    }
+  }
+  return await user.update(update);
+}
+UserSchema.methods.denyDoctorRequest = async function (id) {
+  var user = this;
+  var update = {
+    $pull: {
+      "manager.doctorRequest": findRequest(id, user)
+    }
+  }
+  return await user.update(update);
+}
+
 var User = mongoose.model('User', UserSchema);
 
 module.exports = {User}

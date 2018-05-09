@@ -51,7 +51,7 @@ app.post('/users', async (req, res) => {
    getElement("Doctor", res);
   });
   app.get('/manager', authenticate, async (req, res)=>{
-    getElement("Manager", res);
+    getElement("Hospital Manager", res);
   });
 
   app.get('/users/me', authenticate, (req, res) => {
@@ -86,6 +86,8 @@ app.post('/users', async (req, res) => {
       const token = await user.generateAuthToken();      
       res.header('x-auth', token).send(user);
     }catch(e){
+      console.log(e);
+      
       res.status(400).send();
     }
   });
@@ -115,6 +117,7 @@ app.post('/users', async (req, res) => {
     }      
   });
 
+  //add doctor hospital and add request to manager
   app.patch('/addDoctorHospital', authenticate, async (req, res) => {
     try {
       if(req.user.userType != 'Doctor'){
@@ -126,7 +129,7 @@ app.post('/users', async (req, res) => {
       }
       for (const hospital of req.body) {
         let manager = await User.findById(hospital.managerId);
-        let result = await manager.addDoctorRequest(req.user);
+        let result = await manager.addDoctorRequest(req.user, hospital.hospitalName);
       }
       res.status(200).send({ updateInfo });
     } catch (e) {
@@ -134,7 +137,32 @@ app.post('/users', async (req, res) => {
       res.status(400).send(e);
     }
   });
-
+  app.patch('/acceptDoctorRequest', authenticate, async (req, res)=>{
+    try{
+      query= {
+        "manager.doctorRequest._id": req.body.id
+      }
+      const user = await User.findOne(query);
+      let result = await user.acceptDoctorRequest(req.body.id);
+      res.status(200).send({result});
+    }catch(e){
+      console.log(e);
+      res.status(400).send(e);
+    }
+  });
+  app.patch('/denyDoctorRequest', authenticate, async (req, res)=>{
+    try {
+      query = {
+        "manager.doctorRequest._id": req.body.id
+      }
+      const user = await User.findOne(query);
+      let result = await user.denyDoctorRequest(req.body.id);
+      res.status(200).send({ result });
+    } catch (e) {
+      console.log(e);
+      res.status(400).send(e);
+    }
+  });
 // user picture upload route
   app.post('/uploadFile', authenticate, async (req, res)=>{
     upload(req, res, function (err) {

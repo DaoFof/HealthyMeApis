@@ -37,7 +37,7 @@ module.exports = function(app) {
         }
       });
 
-      app.get('/hospital/:id', authenticate, async (req, res) => {
+      app.get('/hospital/:id', /*authenticate, */ async (req, res) => {
         try {
           var id = req.params.id;
           if(!ObjectID.isValid(id)){
