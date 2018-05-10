@@ -102,10 +102,15 @@ var UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {
   var user = this;
   var userObject = user.toObject();
-  var toSend = ['_id', 'email', 'lastName', 'firstName', 'userType'];
+  var toSend = ['_id', 'email', 'lastName', 'lat', 'lng','firstName', 'userType'];
   if(user.userType == 'Hospital Manager'){
-    toSend.push('manager.doctorRequest');
+    var specialManagerAdd = ['manager.doctorRequest', 'manager.acceptedDoctor'];
+    specialManagerAdd.forEach(element => {
+      toSend.push(element);
+    });
   }
+  console.log(toSend);
+  
   return _.pick(userObject,toSend);
 };
 
