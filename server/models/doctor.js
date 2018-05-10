@@ -3,11 +3,11 @@ var mongoose = require('mongoose');
 var DoctorSchema = mongoose.Schema({
 medicalField/*Departement*/:{
     type: String,
-    required: true,
+    required: false,
 },
 department:{
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: false
 },
 studiedIn:{
     type: String,

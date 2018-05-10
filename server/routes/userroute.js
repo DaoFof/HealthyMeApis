@@ -83,11 +83,13 @@ app.post('/users', async (req, res) => {
     try{
       const body = _.pick(req.body, ['email', 'password']);
       const user = await User.findByCredentials(body.email, body.password);
+      if(user.allow == false){
+        res.status(403).send({ 'msg': "You haven't been authorized yet!"})
+      }
       const token = await user.generateAuthToken();      
       res.header('x-auth', token).send(user);
     }catch(e){
       console.log(e);
-      
       res.status(400).send();
     }
   });
